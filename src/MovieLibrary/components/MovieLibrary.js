@@ -1,40 +1,60 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { fetchTopRatedMovies } from "../store/actions";
-
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./MovieLibrary.css";
-import { getMovies } from "../store/selectors";
-import MoviesList from "./MoviesList";
+import MoviesList2 from "./MoviesList2";
+import topRatedMovies from "../mocks/topTatedMovies";
+// import { fetchTopRatedMovies } from "../store/actions";
+// import { getMovies } from "../store/selectors";
+// import { connect } from "react-redux";
+// import PropTypes from "prop-types";
 
-class MovieLibrary extends Component {
-  static propTypes = {};
+const MovieLibrary = () => {
+  const [movies, setMovies] = useState(topRatedMovies);
 
-  componentDidMount() {
-    const { fetchTopRatedMovies } = this.props;
-    fetchTopRatedMovies();
-  }
+  console.log(movies);
 
-  render() {
-    const { movies } = this.props;
-    return (
-      <div className="MovieLibrary">
-        <header className="ML-header">
-          <img src={logo} className="ML-logo" alt="logo" />
-          <h1 className="ML-title">Movies.</h1>
-        </header>
-        <div className="ML-intro">
-          {movies.length && <MoviesList movies={movies} />}
-        </div>
+  return (
+    <div className="MovieLibrary">
+      <header className="ML-header">
+        <img src={logo} className="ML-logo" alt="logo" />
+        <h1 className="ML-title">Movies.</h1>
+      </header>
+      <div className="ML-intro">
+        {movies.length && <MoviesList2 movies={movies} />}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-export default connect(
-  (state) => ({
-    movies: getMovies(state),
-  }),
-  { fetchTopRatedMovies }
-)(MovieLibrary);
+export default MovieLibrary;
+
+// class MovieLibrary extends Component {
+//   static propTypes = {};
+
+//   componentDidMount() {
+//     const { fetchTopRatedMovies } = this.props;
+//     fetchTopRatedMovies();
+//   }
+
+//   render() {
+//     const { movies } = this.props;
+//     return (
+//       <div className="MovieLibrary">
+//         <header className="ML-header">
+//           <img src={logo} className="ML-logo" alt="logo" />
+//           <h1 className="ML-title">Movies.</h1>
+//         </header>
+//         <div className="ML-intro">
+//           {movies.length && <MoviesList movies={movies} />}
+//         </div>
+//       </div>
+//     );
+//   }
+// }
+
+// export default connect(
+//   (state) => ({
+//     movies: getMovies(state),
+//   }),
+//   { fetchTopRatedMovies }
+// )(MovieLibrary);
