@@ -1,13 +1,13 @@
-import { Box } from "@chakra-ui/layout";
+import { Box, Flex } from "@chakra-ui/layout";
 import React from "react";
-import "./MoviesList.css";
+// import "./MoviesList.css";
 import classNames from "classnames";
 import MovieListItem from "./MovieListItem";
 import SortingOptions from "./SortingOptions";
 
 const MoviesList2 = ({ movies }) => {
   return (
-    <Box bg="white" color="black">
+    <Box bg="white" color="black" mx="auto">
       <div className="movies-list">
         <div className="items">
           <div>
@@ -16,14 +16,26 @@ const MoviesList2 = ({ movies }) => {
             // onChange={this.handleSortingChange}
             />
           </div>
-          {movies.map((movie) => (
-            <MovieListItem
-              key={movie.id}
-              movie={movie}
-              // isSelected={selectedMovie===movie}
-              // onSelect={this.handleSelectMovie}
-            />
-          ))}
+
+          <Flex
+            flexWrap="wrap"
+            mt="3rem"
+            justifyContent="space-between"
+            w={["90%", "80%", "80%"]}
+            mx="auto"
+            mb="3rem"
+          >
+            {movies.map((movie) => (
+              <Flex mx="auto" mb="1rem" my="auto" p="0.5rem">
+                <MovieListItem
+                  key={movie.id}
+                  movie={movie}
+                  // isSelected={selectedMovie===movie}
+                  // onSelect={this.handleSelectMovie}
+                />
+              </Flex>
+            ))}
+          </Flex>
         </div>
         {/* {
           selectedMovie && (
