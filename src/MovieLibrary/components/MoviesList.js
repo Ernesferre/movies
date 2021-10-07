@@ -1,101 +1,90 @@
-import React, { Component, PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
+import { Box, Flex, Text } from "@chakra-ui/layout";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
+import React, { useState } from "react";
+import MovieListItem from "./MovieListItem";
+import Zoom from "react-reveal/Zoom";
 
-import TMDBImage from './TMDBImage'
-import './MoviesList.css'
+const MoviesList = ({ movies }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [movieData, setMovieData] = useState({});
 
-export default class MoviesList extends PureComponent {
+  const showMovie = (id) => {
+    const movieSelected = movies.find((movie) => movie.id == id);
+    setMovieData(movieSelected);
+  };
 
-  static propTypes = {
-    movies: PropTypes.array.isRequired
-  }
+  return (
+    <Zoom>
+      <Box color="white" mx="auto">
+        <Box>
+          <Flex
+            flexWrap="wrap"
+            mt="3rem"
+            justifyContent="space-between"
+            w={["90%", "100%"]}
+            mx="auto"
+            mb="3rem"
+          >
+            {movies.map((movie) => (
+              <Flex key={movie.id} mx="auto" mb="1rem" my="auto" p="0.5rem">
+                <MovieListItem
+                  movie={movie}
+                  showMovie={showMovie}
+                  onOpen={onOpen}
+                />
+              </Flex>
+            ))}
+          </Flex>
+        </Box>
 
-  state = {
-    selectedMovie: null
-  }
+        <Box>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent bg="yellow.300" color="black">
+              <Box
+                w="100%"
+                textAlign="left"
+                display="flex"
+                flexDirection="column"
+              >
+                <ModalHeader textAlign="left">
+                  <Text
+                    textAlign="left"
+                    fontWeight="bold"
+                    fontSize="2rem"
+                    mb="-1rem"
+                  >
+                    {movieData.title}
+                  </Text>
+                </ModalHeader>
 
-  handleSelectMovie = item => this.setState({selectedMovie: item})
+                <ModalCloseButton />
 
-  handleSortingChange = sortingType => console.log(sortingType)
+                <ModalBody>
+                  <Text> {movieData.overview} </Text>
+                </ModalBody>
 
-  render() {
+                <ModalFooter justifyContent="center">
+                  <Text fontWeight="bold">
+                    Ranking: {movieData.vote_average}
+                  </Text>
+                </ModalFooter>
+              </Box>
+            </ModalContent>
+          </Modal>
+        </Box>
+      </Box>
+    </Zoom>
+  );
+};
 
-    const {movies} = this.props
-    const {selectedMovie} = this.state
-
-    return (
-      <div className="movies-list">
-        <div className="items">
-          <div>
-            <span>Sort by:</span>
-            <SortingOptions onChange={this.handleSortingChange}/>
-          </div>
-          {
-            movies.map(movie =>
-              <MovieListItem key={movie.id} movie={movie} isSelected={selectedMovie===movie} onSelect={this.handleSelectMovie}/>
-            )
-          }
-        </div>
-        {
-          selectedMovie && (
-            <ExpandedMovieItem movie={selectedMovie} />
-          )
-        }
-      </div>
-    )
-  }
-}
-
-const ExpandedMovieItem = ({movie: {title, original_title, poster_path, overview, vote_average, vote_count}}) => (
-  <div className="expanded-movie-item">
-    <TMDBImage src={poster_path} className="poster" />
-    <div className="description">
-      <h2>{title}({original_title})</h2>
-      <div><h4>Rank(votes count)</h4>: <span>{vote_average}({vote_count})</span></div>
-      <span>{overview}</span>
-    </div>
-  </div>
-)
-
-class MovieListItem extends Component {
-
-  handleClick = () => {
-    const {movie, onSelect} = this.props
-    onSelect(movie)
-  }
-
-  render() {
-    const {movie: {title, vote_average}, isSelected} = this.props
-    return (
-      <div className={classNames('movie-list-item', {'selected': isSelected})} onClick={this.handleClick}>{title}({vote_average})</div>
-    )
-  }
-}
-
-class SortingOptions extends Component {
-
-  state = {
-    value: ''
-  }
-
-  handleChange = e => {
-    const selectedValue = e.target.value
-    const {onChange} = this.props
-    this.setState({value: selectedValue})
-    onChange(selectedValue)
-  }
-
-  render() {
-
-    return (
-      <select value={this.state.value} onChange={this.handleChange}>
-        <option value=""></option>
-        <option value="name_asc">A -> Z</option>
-        <option value="name_desc">Z -> A</option>
-        <option value="rating">Rating</option>
-      </select>
-    )
-  }
-}
-
+export default MoviesList;

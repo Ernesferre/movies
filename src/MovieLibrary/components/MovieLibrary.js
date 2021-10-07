@@ -1,60 +1,42 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
-import "./MovieLibrary.css";
-import MoviesList2 from "./MoviesList2";
+import Jump from "react-reveal/Jump";
+import MoviesList from "./MoviesList";
 import topRatedMovies from "../mocks/topTatedMovies";
-// import { fetchTopRatedMovies } from "../store/actions";
-// import { getMovies } from "../store/selectors";
-// import { connect } from "react-redux";
-// import PropTypes from "prop-types";
+import { Box, Heading, HStack, Spacer } from "@chakra-ui/react";
+import SortingOptions from "./SortingOptions";
 
 const MovieLibrary = () => {
   const [movies, setMovies] = useState(topRatedMovies);
 
-  console.log(movies);
+  const handleRefresh = () => {
+    window.location.replace("/");
+  };
 
   return (
-    <div className="MovieLibrary">
-      <header className="ML-header">
-        <img src={logo} className="ML-logo" alt="logo" />
-        <h1 className="ML-title">Movies.</h1>
-      </header>
-      <div className="ML-intro">
-        {movies.length && <MoviesList2 movies={movies} />}
-      </div>
-    </div>
+    <>
+      <HStack bg="brand.secondary" position="sticky" top="0" zIndex="1">
+        <Jump>
+          <Heading
+            color="black"
+            fontWeight="extrabold"
+            p="1rem"
+            fontFamily="Josefin Sans"
+            cursor="pointer"
+            onClick={handleRefresh}
+          >
+            Movies
+          </Heading>
+        </Jump>
+        <Spacer></Spacer>
+        <HStack p="1rem">
+          <Spacer></Spacer>
+          <SortingOptions />
+        </HStack>
+      </HStack>
+
+      <Box>{movies.length && <MoviesList movies={movies} />}</Box>
+    </>
   );
 };
 
 export default MovieLibrary;
-
-// class MovieLibrary extends Component {
-//   static propTypes = {};
-
-//   componentDidMount() {
-//     const { fetchTopRatedMovies } = this.props;
-//     fetchTopRatedMovies();
-//   }
-
-//   render() {
-//     const { movies } = this.props;
-//     return (
-//       <div className="MovieLibrary">
-//         <header className="ML-header">
-//           <img src={logo} className="ML-logo" alt="logo" />
-//           <h1 className="ML-title">Movies.</h1>
-//         </header>
-//         <div className="ML-intro">
-//           {movies.length && <MoviesList movies={movies} />}
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// export default connect(
-//   (state) => ({
-//     movies: getMovies(state),
-//   }),
-//   { fetchTopRatedMovies }
-// )(MovieLibrary);
