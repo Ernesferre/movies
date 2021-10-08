@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Jump from "react-reveal/Jump";
 import MoviesList from "./MoviesList";
-import topRatedMovies from "../mocks/topTatedMovies";
+import { productsFetch } from "../mocks/topTatedMovies.js";
 import { Box, Heading, HStack, Spacer } from "@chakra-ui/react";
 import SortingOptions from "./SortingOptions";
 
 const MovieLibrary = () => {
-  const [movies, setMovies] = useState(topRatedMovies);
+  const [movies, setMovies] = useState([]);
+  const [clickButton, setclickButton] = useState(false);
+
+  useEffect(() => {
+    if (clickButton) {
+      setMovies(movies);
+      setclickButton(false);
+    } else {
+      productsFetch.then((res) => {
+        setMovies(res);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clickButton]);
 
   const handleRefresh = () => {
     window.location.replace("/");
@@ -17,7 +30,7 @@ const MovieLibrary = () => {
       <HStack bg="brand.secondary" position="sticky" top="0" zIndex="1">
         <Jump>
           <Heading
-            color="black"
+            color="yellow.300"
             fontWeight="extrabold"
             p="1rem"
             fontFamily="Josefin Sans"
@@ -28,10 +41,15 @@ const MovieLibrary = () => {
           </Heading>
         </Jump>
         <Spacer></Spacer>
-        <HStack p="1rem">
-          <Spacer></Spacer>
-          <SortingOptions />
-        </HStack>
+        <Jump>
+          <HStack p="1rem">
+            <SortingOptions
+              movies={movies}
+              setMovies={setMovies}
+              setclickButton={setclickButton}
+            />
+          </HStack>
+        </Jump>
       </HStack>
 
       <Box>{movies.length && <MoviesList movies={movies} />}</Box>

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import {
   Modal,
@@ -7,9 +8,9 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
-import React, { useState } from "react";
+
 import MovieListItem from "./MovieListItem";
 import Zoom from "react-reveal/Zoom";
 
@@ -49,13 +50,12 @@ const MoviesList = ({ movies }) => {
         <Box>
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
-            <ModalContent bg="yellow.300" color="black">
-              <Box
-                w="100%"
-                textAlign="left"
-                display="flex"
-                flexDirection="column"
-              >
+            <ModalContent
+              bg="yellow.300"
+              color="black"
+              w={["85%", "70%", "50%"]}
+            >
+              <Box textAlign="left" display="flex" flexDirection="column">
                 <ModalHeader textAlign="left">
                   <Text
                     textAlign="left"
