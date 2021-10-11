@@ -3,15 +3,16 @@ import { Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { sortFunction } from "../components/helpers/sortFunction";
 
-const SortingOptions = ({ movies, setMovies, setclickButton }) => {
+const SortingOptions = ({ movies, setMovies, setclickButton, setSort }) => {
   const handleSort = (sort, mov) => {
     sortFunction(sort, mov);
     setMovies(mov);
     setclickButton(true);
+    setSort(sort);
   };
 
   return (
-    <Menu bg="white">
+    <Menu>
       <MenuButton
         as={Button}
         bg="yellow.300"
@@ -19,13 +20,12 @@ const SortingOptions = ({ movies, setMovies, setclickButton }) => {
         fontFamily="heading"
         rightIcon={<ChevronDownIcon />}
         _hover={{
-          backgroundColor: "yellow.300",
-          color: "black",
+          backgroundColor: "yellow.500",
         }}
       >
         Sort by
       </MenuButton>
-      <MenuList bg="brand.primary" color="black" w="10rem">
+      <MenuList bg="green.400" color="black" w="5rem">
         <MenuItem
           onClick={() => {
             handleSort("up", movies);

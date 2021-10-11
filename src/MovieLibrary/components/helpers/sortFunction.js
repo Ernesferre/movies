@@ -24,6 +24,7 @@ export const sortFunction = (sort, mov) => {
       });
 
       break;
+
     case "rating":
       mov.sort((a, b) => {
         if (a.vote_average < b.vote_average) {

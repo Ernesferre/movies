@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from "react";
 import Jump from "react-reveal/Jump";
 import MoviesList from "./MoviesList";
-import { productsFetch } from "../mocks/topTatedMovies.js";
+import { getMovies } from "./helpers/getMovies";
 import { Box, Heading, HStack, Spacer } from "@chakra-ui/react";
 import SortingOptions from "./SortingOptions";
+import Loader from "./Loader";
 
 const MovieLibrary = () => {
   const [movies, setMovies] = useState([]);
+
   const [clickButton, setclickButton] = useState(false);
+  const [sort, setSort] = useState("");
 
   useEffect(() => {
-    if (clickButton) {
-      setMovies(movies);
-      setclickButton(false);
-    } else {
-      productsFetch.then((res) => {
-        setMovies(res);
+    if (!clickButton) {
+      getMovies(1).then((res) => {
+        setMovies(res.results);
       });
+    } else {
+      setMovies(movies);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clickButton]);
+  }, [sort]);
 
   const handleRefresh = () => {
     window.location.replace("/");
@@ -47,12 +49,13 @@ const MovieLibrary = () => {
               movies={movies}
               setMovies={setMovies}
               setclickButton={setclickButton}
+              setSort={setSort}
             />
           </HStack>
         </Jump>
       </HStack>
 
-      <Box>{movies.length && <MoviesList movies={movies} />}</Box>
+      <Box>{movies.length ? <MoviesList movies={movies} /> : <Loader />}</Box>
     </>
   );
 };

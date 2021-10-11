@@ -5,18 +5,10 @@ import Pulse from "react-reveal/Pulse";
 import { CircularProgress, CircularProgressLabel, Box } from "@chakra-ui/react";
 
 const MovieListItem = ({ movie, showMovie, onOpen }) => {
-  console.log(movie.vote_average * 10);
-
   return (
     <Pulse>
       <Container onClick={onOpen}>
-        <Box
-          onClick="disable"
-          textAlign="right"
-          mr="-1rem"
-          position="relative"
-          bottom="-1.5rem"
-        >
+        <Box textAlign="right" mr="-1rem" position="relative" bottom="-1.5rem">
           <CircularProgress
             value={movie.vote_average * 10}
             color="green"
