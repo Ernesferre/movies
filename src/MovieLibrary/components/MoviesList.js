@@ -29,7 +29,7 @@ const MoviesList = ({ movies }) => {
         <Box>
           <Flex
             flexWrap="wrap"
-            mt="3rem"
+            mt="1rem"
             justifyContent="space-between"
             w={["90%", "100%"]}
             mx="auto"

@@ -5,23 +5,23 @@ import { getMovies } from "./helpers/getMovies";
 import { Box, Heading, HStack, Spacer } from "@chakra-ui/react";
 import SortingOptions from "./SortingOptions";
 import Loader from "./Loader";
+import Pages from "./Pages";
 
 const MovieLibrary = () => {
   const [movies, setMovies] = useState([]);
 
-  const [clickButton, setclickButton] = useState(false);
+  // const [clickButton, setclickButton] = useState(false);
   const [sort, setSort] = useState("");
+  const [page, setPage] = useState();
 
   useEffect(() => {
-    if (!clickButton) {
-      getMovies(1).then((res) => {
+    getMovies(page)
+      .then((res) => {
         setMovies(res.results);
-      });
-    } else {
-      setMovies(movies);
-    }
+      })
+      .catch((err) => console.log(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sort]);
+  }, [page]);
 
   const handleRefresh = () => {
     window.location.replace("/");
@@ -48,7 +48,7 @@ const MovieLibrary = () => {
             <SortingOptions
               movies={movies}
               setMovies={setMovies}
-              setclickButton={setclickButton}
+              // setclickButton={setclickButton}
               setSort={setSort}
             />
           </HStack>
@@ -56,6 +56,19 @@ const MovieLibrary = () => {
       </HStack>
 
       <Box>{movies.length ? <MoviesList movies={movies} /> : <Loader />}</Box>
+
+      <Box
+        textAlign="center"
+        color="yellow"
+        fontSize="2rem"
+        mt="1rem"
+        mb="2rem"
+      >
+        <Pages
+          setPage={setPage}
+          // setclickButton={setclickButton}
+        />
+      </Box>
     </>
   );
 };

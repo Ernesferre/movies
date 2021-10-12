@@ -3,11 +3,11 @@ import { Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { sortFunction } from "../components/helpers/sortFunction";
 
-const SortingOptions = ({ movies, setMovies, setclickButton, setSort }) => {
+const SortingOptions = ({ movies, setMovies, setSort }) => {
   const handleSort = (sort, mov) => {
     sortFunction(sort, mov);
     setMovies(mov);
-    setclickButton(true);
+    // setclickButton(true);
     setSort(sort);
   };
 

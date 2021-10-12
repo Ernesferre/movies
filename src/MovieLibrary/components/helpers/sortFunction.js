@@ -37,7 +37,7 @@ export const sortFunction = (sort, mov) => {
       });
       break;
 
-    default:
-      break;
+    // default:
+    //   break;
   }
 };
