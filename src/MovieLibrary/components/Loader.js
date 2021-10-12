@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import { Spinner } from "@chakra-ui/react";
 import React from "react";
 
@@ -12,7 +12,6 @@ const Loader = () => {
         color="red.500"
         size="xl"
       />
-      <Text>Loading...</Text>
     </Box>
   );
 };

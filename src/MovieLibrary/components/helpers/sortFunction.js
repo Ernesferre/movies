@@ -1,5 +1,5 @@
-export const sortFunction = (sort, mov) => {
-  switch (sort) {
+export const sortFunction = (sortCriterion, mov) => {
+  switch (sortCriterion) {
     case "up":
       mov.sort((a, b) => {
         if (a.title < b.title) {
@@ -37,7 +37,7 @@ export const sortFunction = (sort, mov) => {
       });
       break;
 
-    // default:
-    //   break;
+    default:
+      break;
   }
 };

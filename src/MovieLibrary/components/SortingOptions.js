@@ -7,7 +7,6 @@ const SortingOptions = ({ movies, setMovies, setSort }) => {
   const handleSort = (sort, mov) => {
     sortFunction(sort, mov);
     setMovies(mov);
-    // setclickButton(true);
     setSort(sort);
   };
 

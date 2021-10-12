@@ -2,25 +2,29 @@ import React, { useState, useEffect } from "react";
 import Jump from "react-reveal/Jump";
 import MoviesList from "./MoviesList";
 import { getMovies } from "./helpers/getMovies";
-import { Box, Heading, HStack, Spacer } from "@chakra-ui/react";
+import { Box, Heading, HStack, Spacer, Text } from "@chakra-ui/react";
 import SortingOptions from "./SortingOptions";
 import Loader from "./Loader";
-import Pages from "./Pages";
 
 const MovieLibrary = () => {
   const [movies, setMovies] = useState([]);
-
-  // const [clickButton, setclickButton] = useState(false);
   const [sort, setSort] = useState("");
-  const [page, setPage] = useState();
+  const [page, setPage] = useState(1);
+  const [loading, setloading] = useState(true);
+
+  const handleScroll = (event) => {
+    const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
+    if (scrollHeight - scrollTop === clientHeight) {
+      setPage((prev) => prev + 1);
+    }
+  };
 
   useEffect(() => {
-    getMovies(page)
-      .then((res) => {
-        setMovies(res.results);
-      })
-      .catch((err) => console.log(err));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setloading(true);
+    getMovies(page).then((res) => {
+      setMovies((prev) => [...prev, ...res.results]);
+      setloading(false);
+    });
   }, [page]);
 
   const handleRefresh = () => {
@@ -48,26 +52,19 @@ const MovieLibrary = () => {
             <SortingOptions
               movies={movies}
               setMovies={setMovies}
-              // setclickButton={setclickButton}
               setSort={setSort}
             />
           </HStack>
         </Jump>
       </HStack>
 
-      <Box>{movies.length ? <MoviesList movies={movies} /> : <Loader />}</Box>
-
-      <Box
-        textAlign="center"
-        color="yellow"
-        fontSize="2rem"
-        mt="1rem"
-        mb="2rem"
-      >
-        <Pages
-          setPage={setPage}
-          // setclickButton={setclickButton}
-        />
+      <Box h="80rem" overflowY="scroll" onScroll={handleScroll}>
+        {movies.length ? <MoviesList movies={movies} /> : <Loader />}
+        {loading && (
+          <Text w="20rem" m="2rem auto" textAlign="center" color="white">
+            Loading movies...
+          </Text>
+        )}
       </Box>
     </>
   );
