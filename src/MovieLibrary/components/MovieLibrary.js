@@ -58,7 +58,7 @@ const MovieLibrary = () => {
         </Jump>
       </HStack>
 
-      <Box h="80rem" overflowY="scroll" onScroll={handleScroll}>
+      <Box h="30rem" overflowY="scroll" onScroll={handleScroll}>
         {movies.length ? <MoviesList movies={movies} /> : <Loader />}
         {loading && (
           <Text w="20rem" m="2rem auto" textAlign="center" color="white">
