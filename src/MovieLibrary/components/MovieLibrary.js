@@ -9,7 +9,7 @@ import Loader from "./Loader";
 const MovieLibrary = () => {
   const [movies, setMovies] = useState([]);
   const [sort, setSort] = useState("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   const [loading, setloading] = useState(true);
 
   const handleScroll = (event) => {

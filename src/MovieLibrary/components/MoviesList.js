@@ -14,7 +14,7 @@ import {
 import MovieListItem from "./MovieListItem";
 import Zoom from "react-reveal/Zoom";
 
-const MoviesList = ({ movies, handleScroll }) => {
+const MoviesList = ({ movies }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [movieData, setMovieData] = useState({});
 
