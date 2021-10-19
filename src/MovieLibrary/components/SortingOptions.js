@@ -24,7 +24,7 @@ const SortingOptions = ({ movies, setMovies, setSort }) => {
       >
         Sort by
       </MenuButton>
-      <MenuList bg="green.400" color="black" w="5rem">
+      <MenuList bg="green.400" color="black" w="5rem" mx="auto">
         <MenuItem
           onClick={() => {
             handleSort("up", movies);
